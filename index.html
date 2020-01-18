@@ -4,72 +4,15 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
-    <title>Movies</title>
+    <title>Chrono</title>
 
 </head>
 <body>
-<script>
-    class Cron {
-        constructor(time, containerId) {
-            this.container = containerId;
-            this.time = this._convertSecondsToTime(time);
-            this.backupTime = this.time;
-            this.interval = undefined;
-            this._buildCronContainer();
-        }
 
-        start() {
-            if (this.interval !== undefined) return false;
-
-            this.interval = setInterval(() => {
-                this.time--;
-                this.showTime();
-            }, 950);
-        }
-
-        stop() {
-            clearInterval(this.interval);
-            this.interval = undefined;
-        }
-
-        reset() {
-            this.time = this.backupTime;
-            this.showTime();
-        }
-
-        showTime() {
-            const minutes = ~~(this.time / 60);
-            const seconds = this.time % 60;
-            document.querySelector(`#${this.container}`).innerHTML = this.time > 0 ? `${Math.floor(minutes)}min ${seconds}s` : 'RING!';
-            if (this.time === 0) this.stop();
-        }
-
-        _convertSecondsToTime(time) {
-            let timeInSeconds = 0;
-
-            time.split(' ').forEach(timePart => {
-                timeInSeconds += timePart.match(/min/g) ? timePart.match(/\d+/g)[0] * 60 : parseInt(timePart.match(/\d+/g)[0]);
-            });
-            return timeInSeconds;
-        }
-
-        _buildCronContainer() {
-            const htmlString = `<div><h1 id="${this.container}">00m 00s</h1>
-                                <button onclick="getCronById('${this.container}').start()">Start</button>
-                                <button onclick="getCronById('${this.container}').stop()">Stop</button>
-                                <button onclick="getCronById('${this.container}').reset()">Reset</button>
-                                </div>`;
-            document.querySelector('body').insertAdjacentHTML('beforeend', htmlString);
-        }
-    }
-
-    function getCronById(id) {
-        return crons.filter(cron => cron.container === id)[0];
-    }
-
-    const crons = [new Cron('50s', 'counter'), new Cron('1min 20s', 'counterTwo'), new Cron('34min', 'counterThree')];
-
-</script>
 <h4>Formato admitido: 0min 0s, 0min, 0s</h4>
+<script src="js/main.js"></script>
+<script>
+    const crons = [new Cron('50s', 'counter'), new Cron('1min 20s', 'counterTwo'), new Cron('34min', 'counterThree')];
+</script>
 </body>
 </html>
